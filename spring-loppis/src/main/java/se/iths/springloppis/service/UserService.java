@@ -15,20 +15,21 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+
+
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    public UserService(UserRepository userRepository,RoleRepository roleRepository) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
-        this.roleRepository=roleRepository;
+        this.roleRepository = roleRepository;
     }
 
     public UserEntity createUser(UserEntity userEntity) {
         userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
-        RoleEntity roleToAdd =roleRepository.findByRole("ROLE_ADMIN");
+        RoleEntity roleToAdd = roleRepository.findByRole("ROLE_USER");
         userEntity.addRole(roleToAdd);
         return userRepository.save(userEntity);
     }
-
 
     public void deleteUser(Long id) {
         UserEntity foundUser = userRepository.findById(id).orElseThrow(EntityNotFoundException::new);

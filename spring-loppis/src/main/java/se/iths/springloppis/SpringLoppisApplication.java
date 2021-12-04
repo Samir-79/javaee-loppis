@@ -12,12 +12,12 @@ public class SpringLoppisApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(SpringLoppisApplication.class, args);
+
     }
 
-
+    // Generate data at startup
     @Bean
     public CommandLineRunner setUpRole(RoleRepository roleRepository) {
-
         return (args) -> {
 
             roleRepository.save(new RoleEntity("ROLE_ADMIN"));

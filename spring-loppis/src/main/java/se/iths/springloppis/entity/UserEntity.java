@@ -1,6 +1,5 @@
 package se.iths.springloppis.entity;
 
-import javax.management.relation.Role;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -16,16 +15,12 @@ public class UserEntity {
     private String username;
     private String email;
     private String password;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<ItemEntity> items = new ArrayList<>();
-    @ManyToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<RoleEntity> roles = new HashSet<>();
-
-    public void addItem(ItemEntity item) {
-        items.add(item);
-        item.setUser(this);
-    }
-
 
     public void addRole(RoleEntity role) {
         roles.add(role);
@@ -37,8 +32,18 @@ public class UserEntity {
         role.getUsers().remove(this);
     }
 
+    public void addItem(ItemEntity item) {
+        items.add(item);
+        item.setUser(this);
+    }
 
+    public Set<RoleEntity> getRoles() {
+        return roles;
+    }
 
+    public void setRoles(Set<RoleEntity> roles) {
+        this.roles = roles;
+    }
 
     public Long getId() {
         return id;
@@ -46,6 +51,14 @@ public class UserEntity {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getUsername() {
@@ -70,21 +83,5 @@ public class UserEntity {
 
     public void setItems(List<ItemEntity> items) {
         this.items = items;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Set<RoleEntity> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<RoleEntity> roles) {
-        this.roles = roles;
     }
 }
