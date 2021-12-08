@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import se.iths.springloppis.entity.UserEntity;
+import se.iths.springloppis.exception.EntityNotFoundException;
 import se.iths.springloppis.service.UserService;
 
 import java.util.Optional;
@@ -23,6 +24,10 @@ public class UserController {
 
     @PostMapping("signup")
     public ResponseEntity<UserEntity> createUser(@RequestBody UserEntity user) {
+
+        //throw new EntityNotFoundException("Tja det blev fel");
+
+
         UserEntity createdUser = userService.createUser(user);
 
         // FOR DEMO PURPOSE
@@ -31,7 +36,7 @@ public class UserController {
         logger.info("Vi loggar på INFO-nivå");
         logger.warn("Vi loggar på WARN-nivå");
         logger.error("Vi loggar på ERROR-nivå");
-
+//          return null;
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
